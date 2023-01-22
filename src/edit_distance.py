@@ -1,6 +1,4 @@
-from sys import argv
 from numba import jit, prange
-
 import numpy as np
 
 
@@ -15,7 +13,7 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
     ed = np.zeros((m + 1, n + 1), np.short)
 
     for i in range(u):  # parallel
-        for j in range(n):
+        for j in prange(n):
             # Compute mi[i, j] according to Equation 2
             if j == 0 and b[j] != o[i]:
                 mi[i, j] = -1
@@ -25,7 +23,7 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
                 mi[i, j] = mi[i, j - 1]
 
     for i in range(m + 1):
-        for j in range(n + 1):  # parallel
+        for j in prange(n + 1):  # parallel
             # Compute ed[i, j] according to Equation 3
             if i == 0:
                 ed[i, j] = j
@@ -54,6 +52,4 @@ def nvpd(a: str, b: str, o: str):
 
 
 if __name__ == "__main__":
-    # print(nvpd(args[1], args[2], args[3]))
-
     print(nvpd("EXECUTION", "INTENTION", "EXCUTION"))

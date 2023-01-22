@@ -1,9 +1,3 @@
-from sys import argv
-
-# import numpy as np
-# import numba
-
-
 def edit_distance_algorithm(a: list, b: list, o: list):
     """Implement Algorithm 1 from paper"""
     u = len(o)
@@ -23,13 +17,9 @@ def edit_distance_algorithm(a: list, b: list, o: list):
             else:
                 mi[i][j] = mi[i][j - 1]
 
-    # for i in range(len(mi)):
-    #     print(*mi[i], sep="\t")
-
     for i in range(m + 1):
         for j in range(n + 1):  # parallel
             # Compute ed[i][j] according to Equation 3
-            #  print(f"Debug u {u} n {n}, a[i] {a[i-1]} j {j}")
             if i == 0:
                 ed[i][j] = j
             elif j == 0:
@@ -60,7 +50,6 @@ def nvpd(a: str, b: str, o: str):
 
 
 if __name__ == "__main__":
-    # print(nvpd(args[1], args[2], args[3]))
     set1 = "IRON", "AERO", "AEINOR"  # 3
     set2 = "ELEPHANT", "RELEVANT", "ELPHANTRV"  #
     set3 = "INTENTION", "EXECUTION", "EXCUTION"  # 5
