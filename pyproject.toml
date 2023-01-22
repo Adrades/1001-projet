@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "vinckierprojet1001"
+version = "0.1.0"
+description = "This project aim to Edit-Distance Sequence Alignment on GPU Using the Wavefront Algorithm in Python"
+authors = ["Zackarie Vinckier <z.vinkier@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "1.23"
+numba = "^0.56.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
