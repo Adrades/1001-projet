@@ -10,6 +10,7 @@ python = "^3.8"
 numpy = "1.23"
 numba = "^0.56.4"
 black = "^22.12.0"
+fastaparser = "^1.1.1"
 
 [tool.poetry.scripts]
 test = "src.runner:run"

@@ -64,6 +64,18 @@ files = [
 ]
 
 [[package]]
+name = "fastaparser"
+version = "1.1.1"
+description = "A Python FASTA file Parser and Writer."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "fastaparser-1.1.1-py3-none-any.whl", hash = "sha256:c929f712bd4ea3e6f3569761c6c4fbe798e9a1c4b04d322deb05c8922e731cd4"},
+    {file = "fastaparser-1.1.1.tar.gz", hash = "sha256:55adcc43285cac07a39844de2bbc5a0b9a40eb35fa99a44b62abe19917cd778e"},
+]
+
+[[package]]
 name = "importlib-metadata"
 version = "6.0.0"
 description = "Read metadata from Python packages"
@@ -297,4 +309,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "0ee8f1d6ecc8514e50dae8b50a9208aed52104ad3477af06aa8e445eeca8d3e6"
+content-hash = "05471ed39df1f18fb8ef8725bd3f3d3deee2124b71c53959c07084cd1ee0fea2"
