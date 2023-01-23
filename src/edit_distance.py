@@ -12,8 +12,8 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
     mi = np.zeros((u, n), np.short)
     ed = np.zeros((m + 1, n + 1), np.short)
 
-    for i in range(u):  # parallel
-        for j in prange(n):
+    for i in prange(u):  # parallel
+        for j in range(n):
             # Compute mi[i, j] according to Equation 2
             if j == 0 and b[j] != o[i]:
                 mi[i, j] = -1
@@ -39,8 +39,7 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
                     ed[i - 1, j] + 1,
                     ed[i - 1, mi[a[i - 1], j - 1]] + (j - mi[a[i - 1], j - 1] - 1),
                 )
-
-    return ed
+    return ed[m, n]
 
 
 def nvpd(a: str, b: str, o: str):

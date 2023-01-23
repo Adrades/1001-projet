@@ -4,9 +4,9 @@ import argparse
 class pyNvPDParser(argparse.ArgumentParser):
     def __init__(self):
         super().__init__(
-            prog = "pyNvPD",
-            description = "Python Implementation of NvPD algorithm",
-            epilog = "See in pyproject.toml for more informations",
+            prog="pyNvPD",
+            description="Python Implementation of NvPD algorithm",
+            epilog="See in pyproject.toml for more informations",
         )
         self.define_args()
 
@@ -28,10 +28,7 @@ class pyNvPDParser(argparse.ArgumentParser):
         )
 
         self.add_argument(
-            "-v",
-            "--verbose",
-            action="store",
-            help="Print more logging messages"
+            "-v", "--verbose", action="store", help="Print more logging messages"
         )
 
         self.add_argument(
@@ -39,31 +36,5 @@ class pyNvPDParser(argparse.ArgumentParser):
             "--edt",
             "--edit_distance_table",
             action="store",
-            help="Output the full distance table"
+            help="Output the full distance table",
         )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

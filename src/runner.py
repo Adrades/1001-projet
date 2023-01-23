@@ -14,7 +14,7 @@ def prot_parser():
     seqs = []
 
     for fasta in fastas:
-        with open(fasta, "r")as file:
+        with open(fasta, "r") as file:
             for seq in fp.Reader(file):
                 print(f"Sequence: {seq.id}({len(seq.sequence_as_string())})")
                 seqs.append(seq.sequence_as_string())
@@ -35,4 +35,4 @@ def run():
 
     r = nvpd(p1, p2, omega)
 
-    print(r[-1, -1])
+    print(r)
