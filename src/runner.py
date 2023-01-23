@@ -1,31 +1,28 @@
 from src.edit_distance import nvpd
-from sys import argv
+from src.parser import pyNvPDParser
 
 import fastaparser as fp
 import os
 
 # TODO real parser ?
 def prot_parser():
-    # use Fasta Parser
-    if len(argv) != 3:
-        print("You must launch the program with two file names.")
-        print(f"Program launched with arguments: {argv}")
+    args = pyNvPDParser().parse_args()
 
-    with open(argv[1], "r")as file:
-        p1 = fp.Reader(file)
-        for seq in p1:
-            seq1 = seq
-            print(f"Sequence 1: {seq.id}({len(seq.sequence_as_string())})")
-            break
+    fastas = args.fasta
+    texts = args.text
 
-    with open(argv[2], "r")as file:
-        p2 = fp.Reader(file)
-        for seq in p2:
-            seq2 = seq
-            print(f"Sequence 2: {seq.id}({len(seq.sequence_as_string())})")
-            break
+    seqs = []
 
-    return seq1.sequence_as_string(), seq2.sequence_as_string()
+    for fasta in fastas:
+        with open(fasta, "r")as file:
+            for seq in fp.Reader(file):
+                print(f"Sequence: {seq.id}({len(seq.sequence_as_string())})")
+                seqs.append(seq.sequence_as_string())
+
+    for text in texts:
+        seqs.append(text)
+
+    return seqs[0], seqs[1]
 
 
 def run():
