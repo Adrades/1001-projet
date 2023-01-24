@@ -1,4 +1,5 @@
 from src.edit_distance import nvpd
+from time import time
 
 import edlib
 import logging
@@ -22,10 +23,13 @@ def bench():
     times = []
     print("Staring Bench")
     for i in range(len(ids)//2):
-        t1 = timeit.timeit(lambda: nvpd(seqs[0], seqs[1]), number=5)
-        t2 = timeit.timeit(lambda: edlib.align(seqs[0], seqs[1]), number=5)
-        print(t1, t2)
-        times.append((t1, t2))
+        t0 = time()
+        nvpd(seqs[0], seqs[1])
+        t1 = time()
+        edlib.align(seqs[0], seqs[1])
+        t2 = time()
+        print(t1 - t0, t2 - t1)
+        times.append((t1 - t0, t2 - t1))
 
     print(times)
 """
