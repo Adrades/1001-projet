@@ -20,9 +20,11 @@ def bench():
     """Use SARS covid sequence to bench edlib against numba powered NvPD"""
     seqs, ids = load()
     times = []
+    print("Staring Bench")
     for i in range(len(ids)//2):
-        t1 = timeit.timeit(lambda: nvpd(seqs[0], seqs[1], 'AIRON'), number=5)
-        t2 = timeit.timeit(lambda: edlib.align('IRON', 'ARON'), number=5)
+        t1 = timeit.timeit(lambda: nvpd(seqs[0], seqs[1]), number=5)
+        t2 = timeit.timeit(lambda: edlib.align(seqs[0], seqs[1]), number=5)
+        print(t1, t2)
         times.append((t1, t2))
 
     print(times)
