@@ -42,8 +42,9 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
     return ed[m, n]
 
 
-def nvpd(a: str, b: str, o: str):
-    o_arr = np.array([i for i in range(len(o))])
+def nvpd(a: str, b: str):
+    o = "".join(set(a+b))
+    o_arr = np.array(range(len(set(a+b))))
     a_arr = np.array([o.find(s) for s in a])
     b_arr = np.array([o.find(s) for s in b])
 

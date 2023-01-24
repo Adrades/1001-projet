@@ -27,12 +27,6 @@ def prot_parser():
 
 def run():
     p1, p2 = prot_parser()
-    omega = set(p1)
-    omega.update(set(p2))
-    omega = "".join(list(omega))
-
-    print(f"Omega: {omega}")
-
-    r = nvpd(p1, p2, omega)
+    r = nvpd(p1, p2)
 
     print(r)
