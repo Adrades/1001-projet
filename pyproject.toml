@@ -12,10 +12,13 @@ numba = "^0.56.4"
 black = "^22.12.0"
 fastaparser = "^1.1.1"
 edlib = "^1.3.9"
+editdistance = "^0.6.2"
+levenshtein = "^0.20.9"
 
 [tool.poetry.scripts]
 test = "src.runner:run"
 bench = "src.bench:bench"
+bench2 = "src.bench2:bench"
 
 [build-system]
 requires = ["poetry-core"]
