@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from src.edit_distance import nvpd
+from src.edit_distance import nvpd as nvpd1
+from src.nvpd import nvpd as nvpd2
 from time import time
 import timeit
 
@@ -30,7 +31,6 @@ def bench():
         edlibTime = timeit.timeit(stmt="edlib.align(query, target)",
                                   number=numRuns, globals=globals()) / numRuns
         print('Edlib: ', edlibTime)
-        print(edlib.align(query, target))
 
         editdistanceTime = timeit.timeit(stmt="editdistance.eval(query, target)",
                                          number=numRuns, globals=globals()) / numRuns
@@ -40,11 +40,21 @@ def bench():
                                          number=numRuns, globals=globals()) / numRuns
         print('levenshtein: ', levenshteinTime)
 
+        tt = 0
+        for i in range(numRuns):
+            t0 = time()
+            nvpd1(query, target)
+            tt += time() - t0
+        nvPDTime = tt / numRuns
+        print('nvpd1: ', nvPDTime)
 
-        print(f"nvpdRes: {nvpd(query, target)}")
-        nvPDTime = timeit.timeit(stmt="nvpd(query, target)",
-                                         number=numRuns, globals=globals()) / numRuns
-        print('nvpd: ', nvPDTime)
+        tt = 0
+        for i in range(numRuns):
+            t0 = time()
+            nvpd2(query, target)
+            tt += time() - t0
+        nvPDTime = tt / numRuns
+        print('nvpd2: ', nvPDTime)
 
 
         print('edlib is %f times faster than editdistance.' % (editdistanceTime / edlibTime))
