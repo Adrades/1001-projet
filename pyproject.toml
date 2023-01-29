@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "src"
+name = "nvpd"
 version = "0.1.0"
-description = "This project aim to Edit-Distance Sequence Alignment on GPU Using the Wavefront Algorithm in Python"
+description = "This project aim to implement the novel parallel edit distance algorithm in Python"
 authors = ["Zackarie Vinckier <z.vinkier@gmail.com>"]
 readme = "README.md"
 
@@ -16,9 +16,9 @@ editdistance = "^0.6.2"
 levenshtein = "^0.20.9"
 
 [tool.poetry.scripts]
-test = "src.runner:run"
-bench = "src.bench:bench"
-bench2 = "src.bench2:bench"
+nvpd = "nvpd.runner:run"
+bench = "nvpd.bench:bench"
+bench2 = "nvpd.bench2:bench"
 
 [build-system]
 requires = ["poetry-core"]

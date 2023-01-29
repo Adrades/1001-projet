@@ -24,12 +24,12 @@ def edit_distance_algorithm(a: list, b: list, o: list):
                 ed[i][j] = j
             elif j == 0:
                 ed[i][j] = i
-            # lmi = mi[a[i]][j-1]
-            elif j - 1 == mi[a[i - 1]][j - 1]:
+            # lmi = mi[a[i]][j-1] + 1
+            elif j == mi[a[i - 1]][j - 1] + 1:
                 ed[i][j] = ed[i - 1][j - 1]
             elif mi[a[i - 1]][j - 1] == None:
                 ed[i][j] = min(ed[i - 1][j - 1], ed[i - 1][j]) + 1
-            elif j - 1 > mi[a[i - 1]][j - 1]:
+            elif j > mi[a[i - 1]][j - 1] + 1:
                 ed[i][j] = min(
                     ed[i - 1][j - 1] + 1,
                     ed[i - 1][j] + 1,

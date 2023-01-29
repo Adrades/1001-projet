@@ -1,5 +1,5 @@
-from src.nvpd import nvpd
-from src.parser import pyNvPDParser
+from nvpd.nvpd import nvpd
+from nvpd.parser import pyNvPDParser
 
 import fastaparser as fp
 import os
