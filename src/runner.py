@@ -1,4 +1,4 @@
-from src.edit_distance import nvpd
+from src.nvpd import nvpd
 from src.parser import pyNvPDParser
 
 import fastaparser as fp
