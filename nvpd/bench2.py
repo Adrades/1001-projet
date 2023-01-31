@@ -61,16 +61,16 @@ def bench():
             t0 = time()
             nvpd1(query, target)
             tt += time() - t0
-        nvPDTime = tt / numRuns
-        print("nvpd1: ", nvPDTime)
+        nvPDTime1 = tt / numRuns
+        print("nvpd1: ", nvPDTime1)
 
         tt = 0
         for i in range(numRuns):
             t0 = time()
             nvpd2(query, target)
             tt += time() - t0
-        nvPDTime = tt / numRuns
-        print("nvpd2: ", nvPDTime)
+        nvPDTime2 = tt / numRuns
+        print("nvpd2: ", nvPDTime2)
 
         print(
             "edlib is %f times faster than editdistance."
@@ -79,3 +79,5 @@ def bench():
         print(
             "edlib is %f times faster than Levenshtein." % (levenshteinTime / edlibTime)
         )
+        print("edlib is %f times faster than NvPD1." % (nvPDTime1 / edlibTime))
+        print("edlib is %f times faster than NvPD2." % (nvPDTime2 / edlibTime))
