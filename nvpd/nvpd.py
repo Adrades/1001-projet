@@ -2,6 +2,8 @@ from numba import njit, prange
 import numpy as np
 
 
+"""NvPD in Python with Numpy arrays and Numba JIT compilation"""
+
 @njit(cache=False, parallel=True)
 def edit_distance_algorithm(a: np.array, b: np.array, o: np.array, n_type):
     """Implement Algorithm 1 from paper

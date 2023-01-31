@@ -1,5 +1,6 @@
 import argparse
 
+"""Cli arg parser for NvPD"""
 
 class pyNvPDParser(argparse.ArgumentParser):
     def __init__(self):

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-# from nvpd.edit_distance import nvpd as nvpd1
-from nvpd.nvpd import nvpd as nvpd2
+from nvpd.nvpd import nvpd
 from time import time
 import timeit
 
@@ -56,14 +55,14 @@ def bench():
         )
         print("levenshtein: ", levenshteinTime)
 
-        nvpd2(query, target)
+        nvpd(query, target)
         tt = 0
         for i in range(numRuns):
             t0 = time()
-            nvpd2(query, target)
+            nvpd(query, target)
             tt += time() - t0
-        nvPDTime2 = tt / numRuns
-        print("nvpd2: ", nvPDTime2)
+        nvPDTime = tt / numRuns
+        print("nvpd: ", nvPDTime)
 
         print(
             "edlib is %f times faster than editdistance."
@@ -72,4 +71,4 @@ def bench():
         print(
             "edlib is %f times faster than Levenshtein." % (levenshteinTime / edlibTime)
         )
-        print("edlib is %f times faster than NvPD2." % (nvPDTime2 / edlibTime))
+        print("edlib is %f times faster than NvPD." % (nvPDTime / edlibTime))

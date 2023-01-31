@@ -4,7 +4,8 @@ from nvpd.parser import pyNvPDParser
 import fastaparser as fp
 import os
 
-# TODO real parser ?
+"""NvPD laucnher"""
+
 def prot_parser():
     args = pyNvPDParser().parse_args()
 
@@ -30,3 +31,6 @@ def run():
     r = nvpd(p1, p2)
 
     print(r)
+
+if __name__ == "__main__":
+    run()
