@@ -1,46 +1,75 @@
-from src.edit_distance import nvpd
+#!/usr/bin/env python
+
+# from nvpd.edit_distance import nvpd as nvpd1
+from nvpd.nvpd import nvpd as nvpd2
 from time import time
+import timeit
 
 import edlib
-import logging
-import timeit
-import fastaparser as fp
-
-
-def load():
-    """Load SARS COVID SEQUENCE"""
-    seqs = []
-    ids = []
-    with open("data/sars_seqs.fasta", "r") as f:
-        for seq in fp.Reader(f):
-            seqs.append(seq.sequence_as_string())
-            ids.append(seq.id)
-    return seqs, ids
+import editdistance
+import Levenshtein
 
 
 def bench():
-    """Use SARS covid sequence to bench edlib against numba powered NvPD"""
-    seqs, ids = load()
-    times = []
-    print("Staring Bench")
-    for i in range(len(ids) // 2):
-        t0 = time()
-        nvpd(seqs[0], seqs[1])
-        t1 = time()
-        edlib.align(seqs[0], seqs[1])
-        t2 = time()
-        print(t1 - t0, t2 - t1)
-        times.append((t1 - t0, t2 - t1))
+    with open("data/mutated_90_perc_oneline.fasta", "r") as f:
+        queryFull = f.readline()
+    print("Read query: ", len(queryFull), " characters.")
 
-    print(times)
+    with open("data/Enterobacteria_phage_1_oneline.fa", "r") as f:
+        targetFull = f.readline()
+    print("Read target: ", len(targetFull), " characters.")
 
+    for seqLen in [10, 30, 100, 1000, 10000, 30000]:
+        global query
+        global target
+        query = queryFull[:seqLen]
+        target = targetFull[:seqLen]
+        numRuns = 10 # max(1000000000 // (seqLen**2), 1)
 
-"""
-     for i in range(#len(ids)//2):
-         t1 = timeit.timeit(lambda: nvpd('IRON', 'ARON', 'AIRON'))
-         t2 = timeit.timeit(lambda: edlib.align('IRON', 'ARON'))
-         times.append((t1, t2))
+        print("Sequence length: ", seqLen)
 
-"""
-if __name__ == "__main__":
-    bench()
+        edlibTime = (
+            timeit.timeit(
+                stmt="edlib.align(query, target)", number=numRuns, globals=globals()
+            )
+            / numRuns
+        )
+        print("Edlib: ", edlibTime)
+
+        editdistanceTime = (
+            timeit.timeit(
+                stmt="editdistance.eval(query, target)",
+                number=numRuns,
+                globals=globals(),
+            )
+            / numRuns
+        )
+        print("editdistance: ", editdistanceTime)
+
+        levenshteinTime = (
+            timeit.timeit(
+                stmt="Levenshtein.distance(query, target)",
+                number=numRuns,
+                globals=globals(),
+            )
+            / numRuns
+        )
+        print("levenshtein: ", levenshteinTime)
+
+        nvpd2(query, target)
+        tt = 0
+        for i in range(numRuns):
+            t0 = time()
+            nvpd2(query, target)
+            tt += time() - t0
+        nvPDTime2 = tt / numRuns
+        print("nvpd2: ", nvPDTime2)
+
+        print(
+            "edlib is %f times faster than editdistance."
+            % (editdistanceTime / edlibTime)
+        )
+        print(
+            "edlib is %f times faster than Levenshtein." % (levenshteinTime / edlibTime)
+        )
+        print("edlib is %f times faster than NvPD2." % (nvPDTime2 / edlibTime))

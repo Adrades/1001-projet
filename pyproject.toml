@@ -18,7 +18,6 @@ levenshtein = "^0.20.9"
 [tool.poetry.scripts]
 nvpd = "nvpd.runner:run"
 bench = "nvpd.bench:bench"
-bench2 = "nvpd.bench2:bench"
 
 [build-system]
 requires = ["poetry-core"]
