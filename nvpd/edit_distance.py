@@ -1,8 +1,8 @@
-from numba import jit, prange
+from numba import njit, prange
 import numpy as np
 
 
-@jit(nopython=True, cache=True, parallel=True)
+@njit(cache=False, parallel=True)
 def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
     """Implement Algorithm 1 from paper"""
     u = int(o.shape[0])

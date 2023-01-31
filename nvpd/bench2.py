@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from src.edit_distance import nvpd as nvpd1
-from src.nvpd import nvpd as nvpd2
+# from nvpd.edit_distance import nvpd as nvpd1
+from nvpd.nvpd import nvpd as nvpd2
 from time import time
 import timeit
 
@@ -19,12 +19,12 @@ def bench():
         targetFull = f.readline()
     print("Read target: ", len(targetFull), " characters.")
 
-    for seqLen in [30, 100, 1000, 10000, 50000]:
+    for seqLen in [10, 30, 100, 1000, 10000, 30000]:
         global query
         global target
         query = queryFull[:seqLen]
         target = targetFull[:seqLen]
-        numRuns = max(1000000000 // (seqLen**2), 1)
+        numRuns = 10 # max(1000000000 // (seqLen**2), 1)
 
         print("Sequence length: ", seqLen)
 
@@ -56,14 +56,7 @@ def bench():
         )
         print("levenshtein: ", levenshteinTime)
 
-        tt = 0
-        for i in range(numRuns):
-            t0 = time()
-            nvpd1(query, target)
-            tt += time() - t0
-        nvPDTime1 = tt / numRuns
-        print("nvpd1: ", nvPDTime1)
-
+        nvpd2(query, target)
         tt = 0
         for i in range(numRuns):
             t0 = time()
@@ -79,5 +72,4 @@ def bench():
         print(
             "edlib is %f times faster than Levenshtein." % (levenshteinTime / edlibTime)
         )
-        print("edlib is %f times faster than NvPD1." % (nvPDTime1 / edlibTime))
         print("edlib is %f times faster than NvPD2." % (nvPDTime2 / edlibTime))

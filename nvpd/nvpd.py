@@ -2,8 +2,8 @@ from numba import njit, prange
 import numpy as np
 
 
-@njit(cache=True, parallel=True)
-def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
+@njit(cache=False, parallel=True)
+def edit_distance_algorithm(a: np.array, b: np.array, o: np.array, n_type):
     """Implement Algorithm 1 from paper
 
     Args:
@@ -18,11 +18,12 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
     m = int(a.shape[0])
     n = int(b.shape[0])
 
-    # N_proc on CPU or Block size on GPU
-    blk_size = 8
+    # N_proc on CPU
+    n_proc = 8
+    blk_size = (n+1) // n_proc + 1
 
-    mi = np.zeros((u, n), np.short)
-    ed = np.zeros((m + 1, n + 1), np.short)
+    mi = np.zeros((u, n), n_type)
+    ed = np.zeros((m + 1, n + 1), n_type)
 
     for i in prange(u):  # parallel
         for j in range(n):
@@ -35,7 +36,7 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
                 mi[i, j] = mi[i, j - 1]
 
     for i in range(m + 1):
-        for blk in prange((n + 1) // blk_size + 1):  # parallel
+        for blk in prange(n_proc):  # parallel
             for j in range(blk_size * blk, blk_size * blk + blk_size):
                 if j >= n + 1:
                     break
@@ -62,11 +63,24 @@ def nvpd(a: str, b: str):
     And then launch the edit distance numba function.
     """
     o = "".join(set(a + b))
-    o_arr = np.array(range(len(set(a + b))), dtype=np.short)
-    a_arr = np.fromiter(map(o.find, a), dtype=np.short)
-    b_arr = np.fromiter(map(o.find, b), dtype=np.short)
 
-    return edit_distance_algorithm(a_arr, b_arr, o_arr)
+    # Since sequence can be longer than short or int size
+    n_type = np.byte
+    len_max = max(map(len, (a,b,o)))
+    if len_max >= np.iinfo(np.longlong).max:
+        raise Exception("The alphabet or one of the sequence is too long")
+    elif len_max >= np.iinfo(np.intc).max:
+        n_type.longlong
+    elif len_max >= np.iinfo(np.short).max:
+        n_type = np.intc
+    elif len_max >= np.iinfo(np.byte).max:
+        n_type = np.short
+
+    o_arr = np.array(range(len(set(a + b))), dtype=n_type)
+    a_arr = np.fromiter(map(o.find, a), dtype=n_type)
+    b_arr = np.fromiter(map(o.find, b), dtype=n_type)
+
+    return edit_distance_algorithm(a_arr, b_arr, o_arr, n_type)
 
 
 if __name__ == "__main__":
