@@ -44,7 +44,7 @@ def edit_distance_algorithm(a: np.array, b: np.array, o: np.array):
                     ed[i, j] = j
                 elif j == 0:
                     ed[i, j] = i
-                elif j== mi[a[i - 1], j - 1] + 1:
+                elif j == mi[a[i - 1], j - 1] + 1:
                     ed[i, j] = ed[i - 1, j - 1]
                 elif mi[a[i - 1], j - 1] == -1:
                     ed[i, j] = min(ed[i - 1, j - 1], ed[i - 1, j]) + 1

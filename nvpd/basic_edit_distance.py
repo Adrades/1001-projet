@@ -20,11 +20,11 @@ def edit_distance_algorithm(a: list, b: list, o: list):
     for i in range(m + 1):
         for j in range(n + 1):  # parallel
             # Compute ed[i][j] according to Equation 3
-            if i == 0:
-                ed[i][j] = j
-            elif j == 0:
+            if j == 0:
                 ed[i][j] = i
-            # lmi = mi[a[i]][j-1] + 1
+            elif i == 0:
+                ed[i][j] = j
+            # lmi = mi[a[i - 1]][j-1] + 1
             elif j == mi[a[i - 1]][j - 1] + 1:
                 ed[i][j] = ed[i - 1][j - 1]
             elif mi[a[i - 1]][j - 1] == None:
